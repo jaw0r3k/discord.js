@@ -989,6 +989,8 @@ export class Guild extends AnonymousGuild {
   public roles: RoleManager;
   public readonly rulesChannel: TextChannel | null;
   public rulesChannelId: Snowflake | null;
+  public readonly safetyAlertsChannel: TextChannel | null;
+  public safetyAlertsChannelId: Snowflake | null;
   public scheduledEvents: GuildScheduledEventManager;
   public readonly shard: WebSocketShard;
   public shardId: number;
@@ -1048,6 +1050,7 @@ export class Guild extends AnonymousGuild {
   /** @deprecated Use {@link RoleManager.setPositions} instead */
   public setRolePositions(rolePositions: readonly RolePosition[]): Promise<Guild>;
   public setRulesChannel(rulesChannel: TextChannelResolvable | null, reason?: string): Promise<Guild>;
+  public setSafetyAlertsChannel(safetyAlertsChannel: TextChannelResolvable | null, reason?: string): Promise<Guild>;
   public setSplash(splash: BufferResolvable | Base64Resolvable | null, reason?: string): Promise<Guild>;
   public setSystemChannel(systemChannel: TextChannelResolvable | null, reason?: string): Promise<Guild>;
   public setSystemChannelFlags(systemChannelFlags: SystemChannelFlagsResolvable, reason?: string): Promise<Guild>;
@@ -4139,6 +4142,10 @@ export class AutoModerationRule extends Base {
   public setPresets(presets: AutoModerationRuleKeywordPresetType[], reason?: string): Promise<AutoModerationRule>;
   public setAllowList(allowList: string[], reason?: string): Promise<AutoModerationRule>;
   public setMentionTotalLimit(mentionTotalLimit: number, reason?: string): Promise<AutoModerationRule>;
+  public setMentionRaidProtectionEnabled(
+    mentionRaidProtectionEnabled: boolean,
+    reason?: string,
+  ): Promise<AutoModerationRule>;
   public setActions(actions: AutoModerationActionOptions[], reason?: string): Promise<AutoModerationRule>;
   public setEnabled(enabled?: boolean, reason?: string): Promise<AutoModerationRule>;
   public setExemptRoles(
@@ -4208,6 +4215,7 @@ export interface AutoModerationTriggerMetadata {
   presets: (AutoModerationRuleKeywordPresetType | AutoModerationRuleKeywordPresetTypes)[];
   allowList: string[];
   mentionTotalLimit: number | null;
+  mentionRaidProtectionEnabled: boolean;
 }
 
 export interface FetchAutoModerationRuleOptions extends BaseFetchOptions {
@@ -5277,6 +5285,7 @@ export interface GuildEditData {
   banner?: BufferResolvable | Base64Resolvable | null;
   rulesChannel?: TextChannelResolvable | null;
   publicUpdatesChannel?: TextChannelResolvable | null;
+  safetyAlertsChannel?: TextChannelResolvable | null;
   preferredLocale?: string | null;
   premiumProgressBarEnabled?: boolean;
   description?: string | null;
