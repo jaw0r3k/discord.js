@@ -139,8 +139,9 @@ class BitField {
   }
 
   *[Symbol.iterator](...hasParams) {
+    const { DefaultBit } = this;
     for (const bitName of Object.keys(this.constructor.Flags)) {
-      if (this.has(bitName, ...hasParams)) yield bitName;
+      if (typeof DefaultBit === typeof bitName && this.has(bitName, ...hasParams)) yield bitName;
     }
   }
 
