@@ -51,7 +51,7 @@ class GuildEmojiRoleManager extends DataManager {
       resolvedRoles.push(resolvedRole);
     }
 
-    const newRoles = [...new Set(resolvedRoles.concat(...this.cache.keys()))];
+    const newRoles = [...new Set(...resolvedRoles, ...this.cache.keys()))];
     return this.set(newRoles);
   }
 
@@ -67,7 +67,7 @@ class GuildEmojiRoleManager extends DataManager {
     for (const role of roleOrRoles.values()) {
       const roleId = this.guild.roles.resolveId(role);
       if (!roleId) {
-        return Promise.reject(new DiscordjsTypeError(ErrorCodes.InvalidElement, 'Array or Collection', 'roles', role));
+        return Promise.reject(new DiscordjsTypeError(ErrorCodes.InvalidElement, 'Array or Collection', 'RoleResolvable', role));
       }
       resolvedRoleIds.push(roleId);
     }
